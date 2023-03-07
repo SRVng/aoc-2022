@@ -14,7 +14,7 @@ pub fn get_answer() {
         .collect();
     dbg!(compartments
         .into_iter()
-        .map(|v| intersect(v[0].clone(), v[1].clone()))
+        .map(|v| intersect(v[0].clone(), v[1].clone(), None))
         .map(|c| get_char_map(c))
         .sum::<usize>());
 
@@ -25,30 +25,24 @@ pub fn get_answer() {
 
     dbg!(group
         .into_iter()
-        .map(|v| intersect_three_depth(v[0].clone(), v[1].clone(), v[2].clone()))
+        .map(|v| intersect(v[0].clone(), v[1].clone(), Some(v[2].clone())))
         .map(|c| get_char_map(c))
         .sum::<usize>());
 }
 
-fn intersect(a: String, b: String) -> char {
+fn intersect(a: String, b: String, c: Option<String>) -> char {
     a.chars().fold('a', |mut acc, v| {
-        b.chars().for_each(|c| {
-            if v.eq(&c) {
-                acc = c
-            }
-        });
-        acc
-    })
-}
-
-fn intersect_three_depth(a: String, b: String, c: String) -> char {
-    a.chars().fold('a', |mut acc, v| {
-        b.chars().for_each(|ch| {
-            c.chars().for_each(|chh| {
+        b.chars().for_each(|ch| match c.clone() {
+            Some(c) => c.chars().for_each(|chh| {
                 if v.eq(&ch) && v.eq(&chh) {
                     acc = ch
                 }
-            })
+            }),
+            None => {
+                if v.eq(&ch) {
+                    acc = ch
+                }
+            }
         });
         acc
     })
