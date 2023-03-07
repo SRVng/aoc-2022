@@ -4,10 +4,10 @@ pub fn get_answer() {
     let input: &str = include_str!("input.txt");
 
     let data: Vec<Vec<char>> = input
-        .split("\n")
+        .split('\n')
         .map(|value| {
             value
-                .split(" ")
+                .split(' ')
                 .map(|c| c.chars().next().expect("Empty string"))
                 .collect::<Vec<char>>()
         })
@@ -46,7 +46,7 @@ fn get_score(opponent: char, us: char) -> Score {
                 'Y' => score += 6,
                 _ => (),
             }
-            return score;
+            score
         }
         'B' => {
             let mut score = get_shape_score(us);
@@ -55,7 +55,7 @@ fn get_score(opponent: char, us: char) -> Score {
                 'Z' => score += 6,
                 _ => (),
             }
-            return score;
+            score
         }
         'C' => {
             let mut score = get_shape_score(us);
@@ -64,7 +64,7 @@ fn get_score(opponent: char, us: char) -> Score {
                 'X' => score += 6,
                 _ => (),
             }
-            return score;
+            score
         }
         _ => 0,
     }

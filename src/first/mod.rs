@@ -3,8 +3,8 @@ pub fn get_answer() {
 
     let mut data: Vec<Vec<u32>> = vec![vec![]];
 
-    input.split("\n").fold(0, |mut acc, value| {
-        if value.len() != 0 {
+    input.split('\n').fold(0, |mut acc, value| {
+        if !value.is_empty() {
             data[acc].push(value.parse().expect("Invalid input string"));
         } else {
             data.push(vec![]);

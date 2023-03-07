@@ -1,7 +1,7 @@
 pub fn get_answer() {
     let input = include_str!("input.txt");
 
-    let rucksack: Vec<String> = input.split("\n").map(|s| s.to_string()).collect();
+    let rucksack: Vec<String> = input.split('\n').map(|s| s.to_string()).collect();
 
     let compartments: Vec<Vec<String>> = rucksack
         .clone()
@@ -15,7 +15,7 @@ pub fn get_answer() {
     dbg!(compartments
         .into_iter()
         .map(|v| intersect(v[0].clone(), v[1].clone(), None))
-        .map(|c| get_char_map(c))
+        .map(get_char_map)
         .sum::<usize>());
 
     let group: Vec<Vec<String>> = rucksack
@@ -26,7 +26,7 @@ pub fn get_answer() {
     dbg!(group
         .into_iter()
         .map(|v| intersect(v[0].clone(), v[1].clone(), Some(v[2].clone())))
-        .map(|c| get_char_map(c))
+        .map(get_char_map)
         .sum::<usize>());
 }
 
