@@ -1,8 +1,8 @@
+use crate::helper::Answer;
+
 type Score = u16;
 
-pub fn get_answer() {
-    let input: &str = include_str!("input.txt");
-
+pub fn get_answer(input: &str) -> Answer<u16, u16> {
     let data: Vec<Vec<char>> = input
         .split('\n')
         .map(|value| {
@@ -13,15 +13,17 @@ pub fn get_answer() {
         })
         .collect();
 
-    dbg!(data
-        .clone()
-        .into_iter()
-        .map(|v| get_score(v[0], v[1]))
-        .sum::<Score>());
-    dbg!(data
-        .into_iter()
-        .map(|v| get_score_second(v[0], v[1]))
-        .sum::<Score>());
+    Answer {
+        first_answer: data
+            .clone()
+            .into_iter()
+            .map(|v| get_score(v[0], v[1]))
+            .sum::<Score>(),
+        second_answer: data
+            .into_iter()
+            .map(|v| get_score_second(v[0], v[1]))
+            .sum::<Score>(),
+    }
 }
 
 // A X Rock
@@ -126,4 +128,21 @@ fn get_score_second(opponent: char, us: char) -> Score {
         _ => (),
     }
     score
+}
+
+#[cfg(test)]
+mod test {
+    use super::{get_answer, Answer};
+
+    #[test]
+    fn test_get_answer() {
+        let input = include_str!("example.txt");
+        let Answer {
+            first_answer,
+            second_answer,
+        } = get_answer(input);
+
+        assert_eq!(first_answer, 15);
+        assert_eq!(second_answer, 12);
+    }
 }

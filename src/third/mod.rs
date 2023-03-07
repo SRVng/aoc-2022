@@ -1,6 +1,6 @@
-pub fn get_answer() {
-    let input = include_str!("input.txt");
+use crate::helper::Answer;
 
+pub fn get_answer(input: &str) -> Answer<usize, usize> {
     let rucksack: Vec<String> = input.split('\n').map(|s| s.to_string()).collect();
 
     let compartments: Vec<Vec<String>> = rucksack
@@ -12,22 +12,28 @@ pub fn get_answer() {
             vec![first, rest]
         })
         .collect();
-    dbg!(compartments
+
+    let first_answer = compartments
         .into_iter()
         .map(|v| intersect(v[0].clone(), v[1].clone(), None))
         .map(get_char_map)
-        .sum::<usize>());
+        .sum::<usize>();
 
     let group: Vec<Vec<String>> = rucksack
         .chunks(3)
         .map(|v| v.to_vec())
         .collect::<Vec<Vec<String>>>();
 
-    dbg!(group
+    let second_answer = group
         .into_iter()
         .map(|v| intersect(v[0].clone(), v[1].clone(), Some(v[2].clone())))
         .map(get_char_map)
-        .sum::<usize>());
+        .sum::<usize>();
+
+    Answer {
+        first_answer,
+        second_answer,
+    }
 }
 
 fn intersect(a: String, b: String, c: Option<String>) -> char {
@@ -69,5 +75,21 @@ fn get_char_map(value: char) -> usize {
                 .0
                 + 27
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::{get_answer, Answer};
+
+    #[test]
+    fn test_get_answer() {
+        let input = include_str!("example.txt");
+        let Answer {
+            first_answer,
+            second_answer,
+        } = get_answer(input);
+        assert_eq!(first_answer, 157);
+        assert_eq!(second_answer, 70);
     }
 }
