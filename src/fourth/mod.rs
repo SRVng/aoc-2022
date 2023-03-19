@@ -32,7 +32,7 @@ pub fn get_answer(input: &str) -> Answer<u16, u16> {
                 second_end: u16,
             }
 
-            fn get_parameter(val: &Vec<Vec<u16>>) -> Parameters {
+            fn get_parameter(val: &[Vec<u16>]) -> Parameters {
                 let first_start = val[0][0];
                 let first_end = val[0][1];
                 let second_start = val[1][0];
