@@ -19,7 +19,7 @@ pub fn get_answer(input: &str) -> Answer<u16, u16> {
         })
         .collect();
 
-    coverage.clone().into_iter().fold(
+    coverage.into_iter().fold(
         Answer {
             first_answer: 0,
             second_answer: 0,
